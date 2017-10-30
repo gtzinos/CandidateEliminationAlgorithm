@@ -42,7 +42,7 @@ public class TrainData {
         this.G.add(gtemp);
         
         for(int i = 0; i < this.attributesLength; i++) {
-            this.possibleValues.add(i, new ArrayList<>());
+            this.possibleValues.add(i, new ArrayList<String>());
         }
     }
     
@@ -59,7 +59,7 @@ public class TrainData {
                 this.trainAsNegative(x);
             }
             
-            this.printSG(i);
+            this.printSGX(i);
         }
     }
     
@@ -71,7 +71,10 @@ public class TrainData {
         }
     }
     
-    public void printSG(int trainIndex) {
+    public void printSGX(int trainIndex) {
+        System.out.print("X"  + (trainIndex+1) + ": ");
+        System.out.println(Arrays.toString(this.trainingData.get(trainIndex)));
+        
         System.out.print("S"  + (trainIndex+1) + ": ");
         System.out.println(Arrays.toString(this.S));
 
@@ -80,7 +83,7 @@ public class TrainData {
             System.out.print(Arrays.toString(this.G.get(i)));
             
             if((i+1) < this.G.size()) {
-                System.out.print(Arrays.toString(this.G.get(i)));
+                System.out.print(", ");
             }
         }
         System.out.println();
@@ -118,25 +121,25 @@ public class TrainData {
     }
     
     public void trainAsNegative(String[] x) {
+        int xLength = x.length;
+        int gLength = this.G.size();
         
-        for(int xIndex = 0; xIndex < x.length - 1; xIndex++) {
-            for(int gRowIndex = 0; gRowIndex < this.G.size(); gRowIndex++) {
-                for(int gCellIndex = 0; gCellIndex < this.G.get(gRowIndex).length; gCellIndex++){
-                    String gValue = this.G.get(gRowIndex)[gCellIndex];
+            for(int gRowIndex = 0; gRowIndex < gLength; gRowIndex++) {
+                for(int xIndex = 0; xIndex < xLength - 1; xIndex++) {
+                    String gValue = this.G.get(gRowIndex)[xIndex];
                     if(!gValue.equals("?") && !gValue.equals(x[xIndex])) {
                         this.G.remove(gRowIndex);
                         break;
                     }
                     else if(gValue.equals("?")){
-                        this.specializeGRow(gRowIndex);
+                        this.specializeGRow(gRowIndex, x);
                         break;
                     }
+                    
                     //Same value
                 }
             }
-        }
-        
-        //this.removeFromG();
+        this.removeFromG();
     }
     
     public void removeFromG() {
@@ -150,16 +153,17 @@ public class TrainData {
         }
     }
     
-    public void specializeGRow(int gRowIndex) {
+    public void specializeGRow(int gRowIndex, String x[]) {
         String oldRow[] = Arrays.copyOf(this.G.get(gRowIndex), this.G.get(gRowIndex).length);
         this.G.remove(gRowIndex);
         
         for(int gCellIndex = 0; gCellIndex < oldRow.length; gCellIndex++) {
             String gValue = oldRow[gCellIndex];
+            
             if(gValue.equals("?")) {
                 String newGRowValue = null;
                 for(int i = 0; i < this.possibleValues.get(gCellIndex).size(); i++) {
-                    if(!this.possibleValues.get(gCellIndex).get(i).equals(gValue)) {
+                    if(!this.possibleValues.get(gCellIndex).get(i).equals(x[gCellIndex])) {
                         newGRowValue = this.possibleValues.get(gCellIndex).get(i);
                         break;
                     }
@@ -168,8 +172,7 @@ public class TrainData {
                 if(newGRowValue != null) {
                     String newRow[] =  Arrays.copyOf(oldRow, oldRow.length);
                     newRow[gCellIndex] = newGRowValue;
-                    this.G.add(gRowIndex, newRow);
-                System.out.println();
+                    this.G.add(this.G.size() > 0 ? this.G.size() - 1 : 0, newRow);
                 }
                 
                // ?, ?

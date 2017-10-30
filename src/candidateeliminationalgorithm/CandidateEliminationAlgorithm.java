@@ -170,7 +170,6 @@ public class TrainData {
                     String newRow[] =  Arrays.copyOf(oldRow, oldRow.length);
                     newRow[gCellIndex] = newGRowValue;
                     this.G.add(this.G.size() > 0 ? this.G.size() - 1 : 0, newRow);
-                    System.out.println();
                 }
                 
                // ?, ?

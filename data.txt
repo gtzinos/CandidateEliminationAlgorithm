@@ -1,0 +1,4 @@
+ilioloustos,mikri,kanoniki,isxiros,mikri,statheros,1
+ilioloustos,mikri,ipsili,isxiros,mikri,statheros,1
+vroxeros,megali,ipsili,isxiros,mikri,allagi,0
+ilioloustos,mikri,ipsili,isxiros,megali,allagi,1

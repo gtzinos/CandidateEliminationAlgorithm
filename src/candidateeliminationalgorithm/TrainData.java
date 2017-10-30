@@ -124,7 +124,7 @@ public class TrainData {
                 for(int gCellIndex = 0; gCellIndex < this.G.get(gRowIndex).length; gCellIndex++){
                     String gValue = this.G.get(gRowIndex)[gCellIndex];
                     if(!gValue.equals("?") && !gValue.equals(x[xIndex])) {
-//                        this.G.remove(gRowIndex);
+                        this.G.remove(gRowIndex);
                         break;
                     }
                     else if(gValue.equals("?")){
@@ -142,7 +142,7 @@ public class TrainData {
     public void removeFromG() {
         for(int i = 0; i < this.G.size(); i++) {
             for(int j = 0; j < this.G.get(i).length; j++) {
-                if(!this.G.get(i)[j].equals("?") && !this.S[i].equals(this.G.get(i)[j])) {
+                if(!this.G.get(i)[j].equals("?") && !this.S[j].equals(this.G.get(i)[j])) {
                     this.G.remove(i);
                     break;
                 }
@@ -151,8 +151,11 @@ public class TrainData {
     }
     
     public void specializeGRow(int gRowIndex) {
-        for(int gCellIndex = 0; gCellIndex < this.G.get(gRowIndex).length; gCellIndex++) {
-            String gValue = this.G.get(gRowIndex)[gCellIndex];
+        String oldRow[] = Arrays.copyOf(this.G.get(gRowIndex), this.G.get(gRowIndex).length);
+        this.G.remove(gRowIndex);
+        
+        for(int gCellIndex = 0; gCellIndex < oldRow.length; gCellIndex++) {
+            String gValue = oldRow[gCellIndex];
             if(gValue.equals("?")) {
                 String newGRowValue = null;
                 for(int i = 0; i < this.possibleValues.get(gCellIndex).size(); i++) {
@@ -163,9 +166,8 @@ public class TrainData {
                 }
                
                 if(newGRowValue != null) {
-                    String newRow[] = this.G.get(gRowIndex);
+                    String newRow[] =  Arrays.copyOf(oldRow, oldRow.length);
                     newRow[gCellIndex] = newGRowValue;
-                    this.G.remove(gRowIndex);
                     this.G.add(gRowIndex, newRow);
                 System.out.println();
                 }

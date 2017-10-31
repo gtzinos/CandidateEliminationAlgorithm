@@ -1,2 +1,2 @@
 # CandidateEliminationAlgorithm
-Machine Learning Algorithm. (Only for Educational Purposes)
+Machine Learning Algorithm. (Tested only for Educational Purposes)

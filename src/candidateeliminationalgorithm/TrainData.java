@@ -148,7 +148,6 @@ public class TrainData {
             }
             
         this.removeFromG();
-        System.out.println();
     }
     
     public void removeFromG() {
@@ -170,7 +169,6 @@ public class TrainData {
             String gValue = oldRow[gCellIndex];
             if(gValue.equals("?")) {
                 
-            System.out.println(this.S[gCellIndex]);
                 String newGRowValue = null;
                 for(int i = 0; i < this.possibleValues.get(gCellIndex).size(); i++) {
                     if(!this.possibleValues.get(gCellIndex).get(i).equals(x[gCellIndex])) {

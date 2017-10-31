@@ -25,7 +25,7 @@ public class CandidateEliminationAlgorithm {
     public static void main(String[] args) {
         BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader("./data2.txt"));
+            br = new BufferedReader(new FileReader("./data.txt"));
             String s;
             ArrayList<String[]> trainingData = new ArrayList<>(); 
             

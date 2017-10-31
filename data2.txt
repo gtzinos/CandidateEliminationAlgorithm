@@ -1,0 +1,5 @@
+ipsiles,ipsilo,nai,1
+xamiles,ipsilo,oxi,0
+xamiles,ipsilo,nai,1
+ipsiles,xamilo,nai,0
+xamiles,xamilo,nai,0

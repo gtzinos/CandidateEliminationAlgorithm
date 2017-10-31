@@ -117,7 +117,9 @@ public class TrainData {
             }
         }
         
-        this.removeFromG();
+       
+        
+       this.removeFromG();
     }
     
     public void trainAsNegative(String[] x) {
@@ -126,20 +128,27 @@ public class TrainData {
         
             for(int gRowIndex = 0; gRowIndex < gLength; gRowIndex++) {
                 for(int xIndex = 0; xIndex < xLength - 1; xIndex++) {
+                    if(this.G.size()-1 < gRowIndex) {
+                        continue;
+                    }
                     String gValue = this.G.get(gRowIndex)[xIndex];
-                    if(!gValue.equals("?") && !gValue.equals(x[xIndex])) {
+                    if(!gValue.equals("?") && !gValue.equals(x[xIndex])) { 
                         this.G.remove(gRowIndex);
                         break;
                     }
                     else if(gValue.equals("?")){
+                        if(!this.S[xIndex].equals("?")) {
                         this.specializeGRow(gRowIndex, x);
+                        }
                         break;
                     }
                     
                     //Same value
                 }
             }
+            
         this.removeFromG();
+        System.out.println();
     }
     
     public void removeFromG() {
@@ -159,8 +168,9 @@ public class TrainData {
         
         for(int gCellIndex = 0; gCellIndex < oldRow.length; gCellIndex++) {
             String gValue = oldRow[gCellIndex];
-            
             if(gValue.equals("?")) {
+                
+            System.out.println(this.S[gCellIndex]);
                 String newGRowValue = null;
                 for(int i = 0; i < this.possibleValues.get(gCellIndex).size(); i++) {
                     if(!this.possibleValues.get(gCellIndex).get(i).equals(x[gCellIndex])) {
